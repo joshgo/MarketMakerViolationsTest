@@ -1,4 +1,4 @@
-﻿Time   ,BestBid,BestOffer,  Bid,  Offer,     IsViolating
+﻿Time   ,BestBid,BestAsk,    Bid,    Ask,     IsViolating
 9:25 am,     10,       20,     ,     20,     Yes - missing bid
 9:31 am,     10,       20,    7,     20,     Yes - Bad bid
 9:34 am,     10,       20,   10,     20,     No
