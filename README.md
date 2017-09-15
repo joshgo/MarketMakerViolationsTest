@@ -2,6 +2,21 @@
 
 Coding/whiteboard exercise given during interview. 
 
+## Problem
+
+Looking through a firm's market data prices (which is already in time order), 
+calculate the number of minutes when the firm was in "violation". A firm is in
+"violation", when their price is inferior by more than 10%. 
+
+Examples:
+
+* Best Bid is at $10, and the firm's price is a $7   (violation)
+* Best Ask is at $20, and the firm's price is at $24 (violation)
+* Best Bid is at $10, and the firm's price is at $9  (Ok)
+* Best Ask is at $20, and the firm's price is at $21 (Ok)
+* Firm's Ask or Bid is missing ....                  (violation)
+
+
 ## Note to self ...
 
 A truly fun little problem, it's an interesting exercise in dealing with time
