@@ -1,0 +1,19 @@
+﻿Time   ,BestBid,BestOffer,  Bid,  Offer,     IsViolating
+9:25 am,     10,       20,     ,     20,     Yes - missing bid
+9:31 am,     10,       20,    7,     20,     Yes - Bad bid
+9:34 am,     10,       20,   10,     20,     No
+9:36 am,      8,       20,    4,     21,     Yes - Bad bid
+9:40 am,      7,       20,    4,     20,     Yes - Bad bid
+9:42 am,     10,       20,   10,     20,     No
+9:43 am,     10,       20,   10,       ,     Yes - missing offer
+9:45 am,     10,       20,   10,     22,     No
+9:47 am,     10,       20,   10,       ,     Yes - missing offer
+9:49 am,     10,       20,   10,     22,     No
+9:51 am,     10,       20,   10,     25,     Yes - Bad offer
+9:53 am,     10,       20,   10,     22,     No
+9:55 am,     10,       18,   10,     25,     Yes - Bad offer
+9:58 am,     10,       20,     ,       ,     Yes - Missing bid/offer
+10:01 am,    10,       20,    6,     25,     Yes - Bad bid
+10:10 am,    10,       20,   10,     20,     No
+10:12 am,    10,       20,   10,     20,     No
+10:15 am,    10,       20,   10,       ,     Yes - Missing offer
