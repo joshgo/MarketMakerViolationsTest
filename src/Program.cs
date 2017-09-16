@@ -108,62 +108,24 @@ namespace MarketViolationsCodingInterview
 
         static void Main(string[] args)
         {
+            var testTimes = new List<Tuple<string, string>>();
+            testTimes.Add(Tuple.Create("9:30", "9:36"));
+            testTimes.Add(Tuple.Create("9:35", "9:42"));
+            testTimes.Add(Tuple.Create("9:42", "9:46"));
+            testTimes.Add(Tuple.Create("9:40", "9:54"));
+            testTimes.Add(Tuple.Create("10:12", "10:13"));
+            testTimes.Add(Tuple.Create("10:16", "10:20"));
+            testTimes.Add(Tuple.Create("10:16", "16:00"));
+            testTimes.Add(Tuple.Create("10:16", "17:30"));
 
-            // Starts in violation
-            var data = LoadDataStream("marketdata.txt");
-            var start = DateTime.Parse("9:30");
-            var end = DateTime.Parse("9:36");
-            int minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
-
-            // Starts ok, then goes to violation
-            data = LoadDataStream("marketdata.txt");
-            start = DateTime.Parse("9:35");
-            end = DateTime.Parse("9:42");
-            minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
-
-            // No violations
-            data = LoadDataStream("marketdata.txt");
-            start = DateTime.Parse("9:42");
-            end = DateTime.Parse("9:46");
-            minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
-
-            // Starts in violation, goes back in forth
-            data = LoadDataStream("marketdata.txt");
-            start = DateTime.Parse("9:40");
-            end = DateTime.Parse("9:54");
-            minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
-
-            // No data, and not in vilation
-            data = LoadDataStream("marketdata.txt");
-            start = DateTime.Parse("10:12");
-            end = DateTime.Parse("10:13");
-            minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
-
-            // No data, but already in violation
-            data = LoadDataStream("marketdata.txt");
-            start = DateTime.Parse("10:16");
-            end = DateTime.Parse("10:20");
-            minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
-
-            // Until market close
-            data = LoadDataStream("marketdata.txt");
-            start = DateTime.Parse("10:16");
-            end = DateTime.Parse("4:00 PM");
-            minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
-
-            // Go past market hours - should be same as previous test
-            data = LoadDataStream("marketdata.txt");
-            start = DateTime.Parse("10:16");
-            end = DateTime.Parse("5:30 PM");
-            minutes = TotalMinutesViolation(data, start, end);
-            Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
+            foreach(var t in testTimes)
+            {
+                var data = LoadDataStream("marketdata.txt");
+                var start = DateTime.Parse(t.Item1);
+                var end = DateTime.Parse(t.Item2);
+                int minutes = TotalMinutesViolation(data, start, end);
+                Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
+            }
         }
     }
 }
