@@ -41,7 +41,7 @@ namespace MarketViolationsCodingInterview
         /// <summary>
         /// Calculates the total minutes in violation for the specified time range
         /// </summary>
-        public static int TotalMinutesViolation(List<MarketData> data, DateTime start, DateTime end)
+        public static int TotalMinutesViolation(IEnumerable<MarketData> data, DateTime start, DateTime end)
         {
             if (data == null)
                 throw new ApplicationException("data is missing");
@@ -92,7 +92,7 @@ namespace MarketViolationsCodingInterview
         /// <summary>
         /// Helper function to load marketdata from csv file
         /// </summary>
-        public static List<MarketData> LoadData(string file)
+        public static IEnumerable<MarketData> LoadDataStream(string file)
         {
             using (var stream = new StreamReader(file))
             using (var csv = new CsvReader(stream))
@@ -100,58 +100,66 @@ namespace MarketViolationsCodingInterview
                 csv.Configuration.TrimHeaders = true;
                 csv.Configuration.TrimFields = true;
                 csv.Configuration.WillThrowOnMissingField = false;
-                return csv.GetRecords<MarketData>().ToList();
+                foreach (var i in csv.GetRecords<MarketData>())
+                    yield return i;
             }
+            yield break;
         }
 
         static void Main(string[] args)
         {
-            // Load data
-            var data = LoadData("marketdata.txt");
 
             // Starts in violation
+            var data = LoadDataStream("marketdata.txt");
             var start = DateTime.Parse("9:30");
             var end = DateTime.Parse("9:36");
             int minutes = TotalMinutesViolation(data, start, end);
             Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
 
             // Starts ok, then goes to violation
+            data = LoadDataStream("marketdata.txt");
             start = DateTime.Parse("9:35");
             end = DateTime.Parse("9:42");
             minutes = TotalMinutesViolation(data, start, end);
             Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
 
             // No violations
+            data = LoadDataStream("marketdata.txt");
             start = DateTime.Parse("9:42");
             end = DateTime.Parse("9:46");
             minutes = TotalMinutesViolation(data, start, end);
             Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
 
             // Starts in violation, goes back in forth
+            data = LoadDataStream("marketdata.txt");
             start = DateTime.Parse("9:40");
             end = DateTime.Parse("9:54");
             minutes = TotalMinutesViolation(data, start, end);
             Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
 
             // No data, and not in vilation
+            data = LoadDataStream("marketdata.txt");
             start = DateTime.Parse("10:12");
             end = DateTime.Parse("10:13");
             minutes = TotalMinutesViolation(data, start, end);
             Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
 
             // No data, but already in violation
+            data = LoadDataStream("marketdata.txt");
             start = DateTime.Parse("10:16");
             end = DateTime.Parse("10:20");
             minutes = TotalMinutesViolation(data, start, end);
             Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
 
             // Until market close
+            data = LoadDataStream("marketdata.txt");
             start = DateTime.Parse("10:16");
             end = DateTime.Parse("4:00 PM");
             minutes = TotalMinutesViolation(data, start, end);
             Console.WriteLine("[{0:hh:mm}, {1:hh:mm}] {2} min", start, end, minutes);
 
             // Go past market hours - should be same as previous test
+            data = LoadDataStream("marketdata.txt");
             start = DateTime.Parse("10:16");
             end = DateTime.Parse("5:30 PM");
             minutes = TotalMinutesViolation(data, start, end);
