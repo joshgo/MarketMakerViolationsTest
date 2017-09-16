@@ -69,12 +69,12 @@ namespace MarketViolationsCodingInterview
                 if (r.Time > end)
                     break;
 
-                if (IsViolation(r) && !violation)
+                if (!violation && IsViolation(r))
                 {
                     startViolation = r.Time;
                     violation = true;
                 }
-                else if (!IsViolation(r) && violation)
+                else if (violation && !IsViolation(r))
                 {
                     totalMinutes += (int) r.Time.Subtract(startViolation).TotalMinutes;
                     violation = false;
