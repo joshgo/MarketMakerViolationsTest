@@ -60,21 +60,27 @@ namespace MarketViolationsCodingInterview
 
             foreach(var r in data)
             {
-                if (r.Time < start)
-                {
-                    violation = IsViolation(r);
-                    continue;
-                }
-
                 if (r.Time > end)
                     break;
 
-                if (!violation && IsViolation(r))
+                bool rowViolation = IsViolation(r);  // Check row once 
+
+                if (r.Time < start)
+                {
+                    violation = rowViolation;
+                    continue;
+                }
+
+                if (violation == rowViolation)      // If no change in state, continue
+                    continue;                       // Otherwise evaulate rowViolation flag
+                                                    // TRUE = start of violation
+                                                    // FALSE = end of violation
+                if (rowViolation)
                 {
                     startViolation = r.Time;
                     violation = true;
                 }
-                else if (violation && !IsViolation(r))
+                else
                 {
                     totalMinutes += (int) r.Time.Subtract(startViolation).TotalMinutes;
                     violation = false;
